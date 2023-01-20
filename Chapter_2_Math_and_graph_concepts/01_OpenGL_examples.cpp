@@ -1,19 +1,30 @@
 //
 // Created by daniel on 20/01/23.
 //
-
+#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-
+using namespace std;
 int main()
 {
     glm::vec2 p1 = glm::vec2(2.0f, 10.0f);
-    glm::vec3 p2 = glm::vec3(10.0f, 5.0f, 2.0f);
+    cout << "p1[0]: " << p1[0] << endl;
+    cout << "p1[1]: " << p1[1] << endl;
+
+    //glm::vec3 p2 = glm::vec3(10.0f, 5.0f, 2.0f);
     glm::mat4 matrix = glm::mat4(1.0f);
+    cout << "matrix[0][0]: " << matrix[0][0] << endl;
+    cout << "matrix[0][1]: " << matrix[0][1] << endl;
+    cout << "matrix[1][1]: " << matrix[1][1] << endl;
+
     //Here the 1.0f parameter passed in shows that the matrix is
     //initialized as a identity matrix.
     glm::mat4 translation = glm::translate(glm::mat4(1.0f),
                                            glm::vec3(3.0f,4.0f, 8.0f));
+
+    cout << "translation: " << translation[0][2] << endl;
+    cout << "translation.length(): " << translation.length() << endl;
+    /*
     glm:: mat4 scale = glm::scale(glm::mat4(1.0f),
                                   glm::vec3( 2.0f, 2.0f, 2.0f));
     glm::mat4 rxMatrix = glm::rotate(glm::mat4(), glm::radians(45.0f),
@@ -58,6 +69,6 @@ int main()
     //So, after obtaining the projection matrix, we can finally perform a perspective projection
     //transform on our view-transformed points to project the vertices onto the screen:
     //Position final = Projection matrix × View matrix × World matrix × Position local
-
-
+    */
+    return 0;
 }
