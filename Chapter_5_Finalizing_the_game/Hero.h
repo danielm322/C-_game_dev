@@ -19,6 +19,10 @@ public:
     void update(float dt);
     void jump(float velocity);
     sf::Sprite getSprite();
+    void MoveRight();
+    void MoveLeft();
+    void StopMovingRight();
+    void StopMovingLeft();
 private:
     sf::Texture m_texture;
     sf::Sprite m_sprite;
@@ -32,6 +36,9 @@ private:
     float m_animDuration;
     float m_elapsedTime;
     sf::Vector2i m_spriteSize;
+    bool m_playerMovingRight;
+    bool m_playerMovingLeft;
+    float m_x_speed;
 };
 
 

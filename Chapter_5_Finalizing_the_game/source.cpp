@@ -19,7 +19,8 @@ bool checkCollision(sf::Sprite sprite1, sf::Sprite sprite2);
 void reset();
 
 sf::Vector2f playerPosition;
-bool playerMoving = false;
+//bool playerMovingRight = false;
+//bool playerMovingLeft = false;
 sf::Texture skyTexture;
 sf::Sprite skySprite;
 sf::Texture bgTexture;
@@ -135,6 +136,12 @@ void updateInput() {
     // while there are pending events...
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Right) {
+                hero.MoveRight();
+            }
+            if (event.key.code == sf::Keyboard::Left) {
+                hero.MoveLeft();
+            }
             if (event.key.code == sf::Keyboard::Up) {
                 hero.jump(750.0f);
             }
@@ -148,6 +155,14 @@ void updateInput() {
                     reset();
                 }
                 else shoot();
+            }
+        }
+        if (event.type == sf::Event::KeyReleased) {
+            if (event.key.code == sf::Keyboard::Right) {
+                hero.StopMovingRight();
+            }
+            if (event.key.code == sf::Keyboard::Left) {
+                hero.StopMovingLeft();
             }
         }
         if (event.key.code == sf::Keyboard::Escape || event.type ==
@@ -171,9 +186,9 @@ void update(float dt) {
         if (enemy->getSprite().getPosition().x < 0) {
             enemies.erase(enemies.begin() + i);
             delete(enemy);
-            gameover = true;
-            bgMusic.stop();
-            gameOverSound.play();
+//            gameover = true;
+//            bgMusic.stop();
+//            gameOverSound.play();
         }
     }
     // Update rockets
@@ -183,6 +198,17 @@ void update(float dt) {
         if (rocket->getSprite().getPosition().x > viewSize.x) {
             rockets.erase(rockets.begin() + i);
             delete (rocket);
+        }
+    }
+    // Check collision between enemies and hero
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        Enemy* enemy = enemies[i];
+        if (checkCollision(hero.getSprite(), enemy->getSprite()))
+        {
+            gameover = true;
+            bgMusic.stop();
+            gameOverSound.play();
         }
     }
     // Check collision between Rocket and Enemies
@@ -266,7 +292,7 @@ void spawnEnemy() {
         default: printf("incorrect y value \n"); return;
     }
     Enemy* enemy = new Enemy();
-    enemy->init("Assets/graphics/enemy.png", enemyPos, speed);
+    enemy->init("Assets/graphics/julie-face-small.png", enemyPos, speed);
     enemies.push_back(enemy);
 }
 

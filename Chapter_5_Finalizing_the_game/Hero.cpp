@@ -15,6 +15,9 @@ void Hero::init(std::string textureName, sf::Vector2f position, float mass)
     m_position = position;
     m_mass = mass;
     m_grounded = false;
+    m_playerMovingRight = false;
+    m_playerMovingLeft = false;
+    m_x_speed = 120.0f;
     // Load a Texture
     m_texture.loadFromFile(textureName.c_str());
     // Create Sprite and Attach a Texture
@@ -65,6 +68,14 @@ void Hero::update(float dt){
         m_grounded = true;
         jumpCount = 0;
     }
+    if (m_playerMovingRight) {
+        m_sprite.move(m_x_speed * dt, 0);
+        m_position.x += m_x_speed * dt;
+    }
+    if (m_playerMovingLeft) {
+        m_sprite.move(-m_x_speed * dt, 0);
+        m_position.x -= m_x_speed * dt;
+    }
 }
 
 void Hero::jump(float velocity){
@@ -79,3 +90,22 @@ sf::Sprite Hero::getSprite(){
     return m_sprite;
 }
 
+void Hero::MoveLeft()
+{
+    m_playerMovingLeft = true;
+}
+
+void Hero::MoveRight()
+{
+    m_playerMovingRight = true;
+}
+
+void Hero::StopMovingLeft()
+{
+    m_playerMovingLeft = false;
+}
+
+void Hero::StopMovingRight()
+{
+    m_playerMovingRight = false;
+}
